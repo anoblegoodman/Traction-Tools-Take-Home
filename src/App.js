@@ -14,16 +14,14 @@ export const SavedPlacesContext = React.createContext();
 //data in many components across multiple levels.
 
 export const App = () => {
-  const [pastPlaces, setPastPlaces] = useState([]);
-  const [futurePlaces, setFuturePlaces] = useState([]);
+  const [pastPlaces, setPastPlaces] = useState({});
+  const [futurePlaces, setFuturePlaces] = useState({});
   return (
     <ApolloProvider client={client}>
       <SavedPlacesContext.Provider
         value={{
           pastPlaces,
-          setPastPlaces,
-          futurePlaces,
-          setFuturePlaces
+          setPastPlaces
         }}
       >
         <Router>

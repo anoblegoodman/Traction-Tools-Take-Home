@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { SavedPlacesContext } from '../App';
+import { useQuery } from '@apollo/react-hooks';
+import { COUNTRY_QUERY } from '../gql-operations/CountryQuery';
 
 export const FuturePlaces = () => {
-  const { futurePlaces } = useContext(SavedPlacesContext);
+  const [futurePlaces, setFuturePlaces] = useState({});
   return (
     <Route
       children={({ history }) => {
