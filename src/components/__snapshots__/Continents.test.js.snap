@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Continents /> should match snapshot when there are continents 1`] = `
+<div>
+  <div
+    className="sc-AxheI gPSmPT"
+  >
+    Choose your continent
+  </div>
+  <div
+    className="sc-fznyAO jvkATr"
+  >
+    <button
+      className="sc-AxgMl eMOtsN"
+      data-testid="Africa"
+      onClick={[Function]}
+    >
+      Africa
+    </button>
+  </div>
+</div>
+`;

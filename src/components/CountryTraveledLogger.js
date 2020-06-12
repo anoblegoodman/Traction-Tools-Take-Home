@@ -1,31 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Route } from 'react-router-dom';
-import styled from 'styled-components';
 import { useFormik } from 'formik';
 import { SavedPlacesContext } from '../App';
-
-const SaveButton = styled.button`
-  background: transparent;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
-  margin: 0 1em;
-  margin-bottom: 5px;
-  padding: 0.25em 1em;
-`;
-
-const TravelLog = styled.div`
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  margin: 20px;
-  width: 33%;
-  padding: 40px;
-  text-align: center;
-`;
+import { TravelLog, TextArea, ButtonSm, ErrorText } from '../styles/styles';
 
 export const CountryTraveledLogger = ({ name }) => {
   const { pastPlaces, setPastPlaces } = useContext(SavedPlacesContext);
   const [editing, setEditing] = useState(false);
+  const [logHasErrors, setLogHasErrors] = useState(false);
   const formik = useFormik({
     initialValues: {
       countryName: name,
@@ -34,25 +15,34 @@ export const CountryTraveledLogger = ({ name }) => {
       goBack: ''
     },
     onSubmit: values => {
-      const places = { ...pastPlaces };
-      places[name] = values;
-      setPastPlaces(places);
-      setEditing(!editing);
+      if (values.tripNotes.length === 0) {
+        setLogHasErrors(true);
+        return;
+      } else {
+        setLogHasErrors(false);
+        const places = { ...pastPlaces };
+        places[name] = values;
+        setPastPlaces(places);
+        setEditing(!editing);
+      }
     }
   });
   return editing ? (
     <TravelLog>
       <h1>{name}</h1>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="tripNotes">Trip Notes</label>
+        <label for="tripNotes">Trip Notes</label>
         <br />
-        <textarea
+        <TextArea
+          rows="10"
+          cols="30"
           id="tripNotes"
           name="tripNotes"
           type="text"
           onChange={formik.handleChange}
           value={formik.values.tripNotes}
         />
+        {logHasErrors && <ErrorText>Trip notes are required</ErrorText>}
         <br />
         <label>Type of Accomodation</label>
         <br />
@@ -91,16 +81,17 @@ export const CountryTraveledLogger = ({ name }) => {
           value={formik.values.goBack}
           onChange={formik.handleChange}
         />
-
-        <button type="submit">Submit</button>
+        <ButtonSm data-testid="submit" type="submit">
+          Submit
+        </ButtonSm>
       </form>
     </TravelLog>
   ) : (
     <TravelLog>
       <h1>{name}</h1>
-      <SaveButton onClick={() => setEditing(!editing)}>
+      <ButtonSm data-testid={`${name}`} onClick={() => setEditing(!editing)}>
         Create Travel Log
-      </SaveButton>
+      </ButtonSm>
     </TravelLog>
   );
 };

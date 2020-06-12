@@ -7,7 +7,6 @@ export const COUNTRY_QUERY = gql`
       name
       countries {
         name
-        capital
         emoji
         languages {
           name

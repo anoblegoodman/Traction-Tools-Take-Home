@@ -1,35 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import styled from 'styled-components';
-
-const HomeButton = styled.button`
-  background: transparent;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
-  margin: 0 1em;
-  margin-bottom: 5px;
-  padding: 0.25em 1em;
-`;
+import { Header, HomeButton, ListWrapper } from '../styles/styles';
 
 export const Home = () => {
   return (
-    <Route
-      children={({ history }) => {
-        return (
-          <div>
-            <header>
-              <p>Travel Log - let's document your world wide travel</p>
-              <HomeButton onClick={() => history.push('/pastplaces')}>
+    <>
+      <Header>Welcome to Your Travel Diary</Header>
+      <Route
+        children={({ history }) => {
+          return (
+            <ListWrapper>
+              <HomeButton
+                data-testid="homeButton"
+                onClick={() => history.push('/past-places')}
+              >
                 Where in the world have you been?
               </HomeButton>
-              <HomeButton onClick={() => history.push('/futureplaces')}>
-                Oh, the places you'll go!
-              </HomeButton>
-            </header>
-          </div>
-        );
-      }}
-    ></Route>
+            </ListWrapper>
+          );
+        }}
+      ></Route>
+    </>
   );
 };
